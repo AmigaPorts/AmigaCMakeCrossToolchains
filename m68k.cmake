@@ -38,12 +38,8 @@ if(WIN32)
 endif()
 
 # Compiler flags
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m${M68K_CPU} -m${M68K_FPU}-float -Os -fomit-frame-pointer -fno-exceptions -s -noixemul")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -m${M68K_CPU} -m${M68K_FPU}-float -Os -fomit-frame-pointer -fno-exceptions -s -noixemul")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -m${M68K_CPU} -m${M68K_FPU}-float -Os -fomit-frame-pointer -fno-exceptions -s -noixemul")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m${M68K_CPU} -m${M68K_FPU}-float -Os -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -s -noixemul")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -m${M68K_CPU} -m${M68K_FPU}-float -Os -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -s -noixemul")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -m${M68K_CPU} -m${M68K_FPU}-float -Os -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -s -noixemul")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -fno-exceptions -s -noixemul")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -s -noixemul")
 set(BUILD_SHARED_LIBS OFF)
 
 # Linker configuration
