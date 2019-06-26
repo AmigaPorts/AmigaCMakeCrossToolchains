@@ -20,12 +20,12 @@ set(CMAKE_CXX_COMPILER ${tools}/bin/ppc-amigaos-g++)
 set(CMAKE_CPP_COMPILER ${tools}/bin/ppc-amigaos-cpp)
 
 # Compiler flags
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -athread=native")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -athread=native")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -athread=native")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -athread=native")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -athread=native")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -athread=native")
 set(BUILD_SHARED_LIBS OFF)
 
 # Linker configuration
