@@ -1,7 +1,7 @@
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR ppc)
 
-#set(CMAKE_SYSROOT /opt/ppc-morphos)
+set(CMAKE_SYSROOT /opt/ppc-morphos)
 set(CMAKE_FIND_ROOT_PATH /opt/ppc-morphos)
 set(tools /opt/ppc-morphos)
 
@@ -30,6 +30,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -fomit-frame-pointer
 set(BUILD_SHARED_LIBS OFF)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-noixemul -ldebug")
+set(CMAKE_EXE_LINKER_FLAGS "-noixemul -lm -ldebug")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
