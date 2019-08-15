@@ -2,7 +2,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR m68k)
 
 # CPU
-set(M68K_CPU_TYPES "68000" "68010" "68020" "68040" "68060")
+set(M68K_CPU_TYPES "68000" "68010" "68020" "68040" "68060" "68080")
 set(M68K_CPU "68000" CACHE STRING "Target CPU model")
 set_property(CACHE M68K_CPU PROPERTY STRINGS ${M68K_CPU_TYPES})
 
@@ -11,6 +11,11 @@ set(M68K_FPU_TYPES "soft" "hard")
 set(M68K_FPU "soft" CACHE STRING "FPU type")
 set_property(CACHE M68K_FPU PROPERTY STRINGS ${M68K_FPU_TYPES})
 
+# Extra flags
+set(M68K_CFLAGS "" CACHE STRING "CFLAGS")
+set(M68K_CXXFLAGS "" CACHE STRING "CXXFLAGS")
+set(M68K_LDFLAGS "" CACHE STRING "LDFLAGS")
+set(M68K_COMMON "" CACHE STRING "Common FLAGS")
 
 if(NOT M68K_TOOLCHAIN_PATH)
 	set(M68K_TOOLCHAIN_PATH /opt/m68k-amigaos)
@@ -40,14 +45,14 @@ if(WIN32)
 endif()
 
 # Compiler flags
-set(FLAGS_COMMON "-m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -s -noixemul")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} -fno-exceptions -fpermissive -fno-rtti")
+set(FLAGS_COMMON "-m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -s -noixemul ${M68K_COMMON}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${M68K_CFLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} -fno-exceptions -fpermissive ${M68K_CXXFLAGS}")
 set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -quiet -x -m${M68K_CPU} -Fhunk -I${M68K_TOOLCHAIN_PATH}/m68k-amigaos/sys-include")
 set(CMAKE_ASM_COMPILE_OBJECT "<CMAKE_ASM_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT> <SOURCE>")
 set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-noixemul -s -Xlinker --allow-multiple-definition ")
+set(CMAKE_EXE_LINKER_FLAGS "-noixemul -s -Xlinker --allow-multiple-definition ${M68K_LDFLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ldebug")
