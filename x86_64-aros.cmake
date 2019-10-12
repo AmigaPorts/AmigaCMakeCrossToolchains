@@ -1,8 +1,8 @@
 set(CMAKE_SYSTEM_NAME Generic)
-set(CMAKE_SYSTEM_PROCESSOR x86)
+setC(MAKE_SYSTEM_PROCESSOR x86_64)
 
-set(CMAKE_FIND_ROOT_PATH /opt/x86-aros)
-set(tools /opt/x86-aros)
+set(CMAKE_FIND_ROOT_PATH /opt/x86_64-aros)
+set(tools /opt/x86_64-aros)
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
@@ -14,9 +14,9 @@ set(AMIGA 1)
 set(AROS 1)
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 
-set(CMAKE_C_COMPILER ${tools}/bin/linux-x86_64/tools/crosstools/i386-aros-gcc)
-set(CMAKE_CXX_COMPILER ${tools}/bin/linux-x86_64/tools/crosstools/i386-aros-g++)
-set(CMAKE_CPP_COMPILER ${tools}/bin/linux-x86_64/tools/crosstools/i386-aros-cpp)
+set(CMAKE_C_COMPILER ${tools}/bin/linux-x86_64/tools/crosstools/x86_64-aros-gcc)
+set(CMAKE_CXX_COMPILER ${tools}/bin/linux-x86_64/tools/crosstools/x86_64-aros-g++)
+set(CMAKE_CPP_COMPILER ${tools}/bin/linux-x86_64/tools/crosstools/x86_64-aros-cpp)
 
 # Compiler flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fomit-frame-pointer -fno-exceptions -static-libstdc++ -s")
@@ -32,4 +32,4 @@ set(CMAKE_EXE_LINKER_FLAGS "-lpthread -static-libstdc++")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
 
-include_directories(/opt/x86-aros/bin/linux-i386/AROS/Extras/Developer/include /opt/x86-aros/bin/linux-x86_64/tools/crosstools/lib/gcc/i386-aros/6.3.0/include-fixed /opt/x86-aros/bin/linux-i386/AROS/Developer/include/SDL/)
+include_directories(/opt/x86_64-aros/bin/linux-x86_64/AROS/Extras/Developer/include /opt/x86_64-aros/bin/linux-x86_64/tools/crosstools/lib/gcc/x86_64-aros/9.1.0/include-fixed)
