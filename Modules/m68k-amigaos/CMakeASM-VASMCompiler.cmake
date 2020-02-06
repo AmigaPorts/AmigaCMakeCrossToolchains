@@ -1,7 +1,6 @@
 FIND_PROGRAM(VASM vasmm68k_mot)
 SET(ASM_DIALECT "-VASM")
 if (VASM)
-
 	# Hack to use VASM to compile the assembly code
 	set(CMAKE_ASM${ASM_DIALECT}_COMPILER_ENV_VAR ${CMAKE_ASM_COMPILER_ENV_VAR}" ")
 	set(CMAKE_ASM${ASM_DIALECT}_COMPILER ${VASM})
