@@ -1,10 +1,38 @@
-set(CMAKE_SYSTEM_NAME Generic)
+set(TOOLCHAIN_OS AmigaOS)
+set(TOOLCHAIN_SYSTEM_INFO_FILE Platform/${TOOLCHAIN_OS})
+
+include(${TOOLCHAIN_SYSTEM_INFO_FILE} OPTIONAL RESULT_VARIABLE _TOOLCHAIN_SYSTEM_INFO_FILE)
+
+if(NOT _TOOLCHAIN_SYSTEM_INFO_FILE)
+	set(CMAKE_SYSTEM_NAME Generic)
+else()
+	set(CMAKE_SYSTEM_NAME ${TOOLCHAIN_OS})
+endif()
+
 set(CMAKE_SYSTEM_PROCESSOR ppc)
 
-set(CMAKE_FIND_ROOT_PATH /opt/ppc-amigaos)
-set(tools /opt/ppc-amigaos)
+if(NOT TOOLCHAIN_PREFIX)
+	string(TOLOWER ${CMAKE_SYSTEM_NAME} SYS_NAME)
+	string(TOLOWER ${CMAKE_SYSTEM_PROCESSOR} SYS_CPU)
+	set(TOOLCHAIN_PREFIX "${SYS_CPU}-${SYS_NAME}")
+	set(TOOLCHAIN_PREFIX_DASHED "${TOOLCHAIN_PREFIX}-")
+endif()
 
-set(CMAKE_PREFIX_PATH ${tools})
+set(AMIGA 1)
+set(AMIGAOS4 1)
+
+# Extra flags
+set(TOOLCHAIN_CFLAGS "" CACHE STRING "CFLAGS")
+set(TOOLCHAIN_CXXFLAGS "" CACHE STRING "CXXFLAGS")
+set(TOOLCHAIN_LDFLAGS "" CACHE STRING "LDFLAGS")
+set(TOOLCHAIN_COMMON "" CACHE STRING "Common FLAGS")
+if(NOT TOOLCHAIN_PATH)
+	set(TOOLCHAIN_PATH /opt/${TOOLCHAIN_PREFIX})
+endif()
+
+set(CMAKE_FIND_ROOT_PATH ${TOOLCHAIN_PATH})
+
+set(CMAKE_PREFIX_PATH ${TOOLCHAIN_PATH})
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
@@ -12,25 +40,29 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_PREFIX_PATH})
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
-set(AMIGA 1)
-set(AMIGAOS4 1)
-set(__amigaos4__ 1)
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 
-set(CMAKE_C_COMPILER ${tools}/bin/ppc-amigaos-gcc)
-set(CMAKE_CXX_COMPILER ${tools}/bin/ppc-amigaos-g++)
-set(CMAKE_CPP_COMPILER ${tools}/bin/ppc-amigaos-cpp)
+set(CMAKE_C_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}gcc)
+set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}g++)
+set(CMAKE_CPP_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}cpp)
+set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}gcc -c)
+
+if(WIN32)
+	set(CMAKE_C_COMPILER ${CMAKE_C_COMPILER}.exe)
+	set(CMAKE_CXX_COMPILER ${CMAKE_CXX_COMPILER}.exe)
+	set(CMAKE_CPP_COMPILER ${CMAKE_CPP_COMPILER}.exe)
+	set(CMAKE_ASM_COMPILER ${CMAKE_ASM_COMPILER}.exe)
+endif()
 
 # Compiler flags
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -athread=native")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -athread=native")
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -athread=native")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -athread=native")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -athread=native")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -mcrt=newlib -fomit-frame-pointer -fno-exceptions -fpermissive -fno-rtti -athread=native")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -mcrt=newlib -athread=native")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
 set(BUILD_SHARED_LIBS OFF)
+unset(FLAGS_COMMON)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-mcrt=newlib -lauto -lunix")
+set(CMAKE_EXE_LINKER_FLAGS "-mcrt=newlib -lauto -lunix ${TOOLCHAIN_LDFLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG}")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
