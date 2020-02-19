@@ -66,6 +66,3 @@ unset(FLAGS_COMMON)
 set(CMAKE_EXE_LINKER_FLAGS "-lpthread -static-libstdc++")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
-
-// FIX ME
-//include_directories(/opt/x86_64-aros/bin/linux-x86_64/AROS/Extras/Developer/include /opt/x86_64-aros/bin/linux-x86_64/tools/crosstools/lib/gcc/x86_64-aros/9.1.0/include-fixed)
