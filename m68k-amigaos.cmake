@@ -31,6 +31,11 @@ set(M68K_FPU_TYPES "soft" "hard")
 set(M68K_FPU "soft" CACHE STRING "FPU type")
 set_property(CACHE M68K_FPU PROPERTY STRINGS ${M68K_FPU_TYPES})
 
+# CRT
+set(MCRT_TYPES "nix" "nix13" "clib2" "ixemul" "newlib")
+set(MCRT "nix" CACHE STRING "Target std lib")
+set_property(CACHE MCRT PROPERTY STRINGS ${MCRT_TYPES})
+
 # Extra flags
 set(TOOLCHAIN_CFLAGS "${M68K_CFLAGS}" CACHE STRING "CFLAGS")
 set(TOOLCHAIN_CXXFLAGS "${M68K_CXXFLAGS}" CACHE STRING "CXXFLAGS")
@@ -69,7 +74,7 @@ if(WIN32)
 endif()
 
 # Compiler flags
-set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -noixemul")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -mcrt=${MCRT}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
 set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -m${M68K_CPU} -I${TOOLCHAIN_PATH}/m68k-amigaos/sys-include")
