@@ -32,8 +32,8 @@ set(M68K_FPU "soft" CACHE STRING "FPU type")
 set_property(CACHE M68K_FPU PROPERTY STRINGS ${M68K_FPU_TYPES})
 
 # CRT
-set(MCRT_TYPES "nix" "nix13" "clib2" "ixemul" "newlib")
-set(MCRT "nix" CACHE STRING "Target std lib")
+set(MCRT_TYPES "nix20" "nix13" "clib2" "ixemul" "newlib")
+set(MCRT "nix20" CACHE STRING "Target std lib")
 set_property(CACHE MCRT PROPERTY STRINGS ${MCRT_TYPES})
 
 # Extra flags
