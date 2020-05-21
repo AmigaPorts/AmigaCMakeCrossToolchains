@@ -82,7 +82,7 @@ set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-noixemul -Xlinker --allow-multiple-definition ${TOOLCHAIN_LDFLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "-mcrt=${MCRT} -Xlinker --allow-multiple-definition ${TOOLCHAIN_LDFLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ldebug")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
