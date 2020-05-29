@@ -73,6 +73,9 @@ if(WIN32)
 	set(CMAKE_ASM_COMPILER ${CMAKE_ASM_COMPILER}.exe)
 endif()
 
+# Special purpose libnix object files - variables for easier linking
+set(LIBNIX_SWAPSTACK_O ${TOOLCHAIN_PATH}/m68k-amigaos/libnix/lib/swapstack.o)
+
 # Compiler flags
 set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -mcrt=${MCRT}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
