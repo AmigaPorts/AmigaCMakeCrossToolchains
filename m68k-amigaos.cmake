@@ -11,7 +11,9 @@ endif()
 
 set(CMAKE_SYSTEM_PROCESSOR m68k)
 
-if(NOT TOOLCHAIN_PREFIX)
+if(M68K_PREFIX)
+	set(TOOLCHAIN_PREFIX "${M68K_PREFIX}")
+else()
 	string(TOLOWER ${CMAKE_SYSTEM_NAME} SYS_NAME)
 	string(TOLOWER ${CMAKE_SYSTEM_PROCESSOR} SYS_CPU)
 	set(TOOLCHAIN_PREFIX "${SYS_CPU}-${SYS_NAME}")
@@ -32,9 +34,9 @@ set(M68K_FPU "soft" CACHE STRING "FPU type")
 set_property(CACHE M68K_FPU PROPERTY STRINGS ${M68K_FPU_TYPES})
 
 # CRT
-set(MCRT_TYPES "nix20" "nix13" "clib2" "ixemul" "newlib")
-set(MCRT "nix20" CACHE STRING "Target std lib")
-set_property(CACHE MCRT PROPERTY STRINGS ${MCRT_TYPES})
+set(M68K_CRT_TYPES "nix20" "nix13" "clib2" "ixemul" "newlib")
+set(M68K_CRT "nix20" CACHE STRING "Target std lib")
+set_property(CACHE M68K_CRT PROPERTY STRINGS ${M68K_CRT_TYPES})
 
 # Extra flags
 set(TOOLCHAIN_CFLAGS "${M68K_CFLAGS}" CACHE STRING "CFLAGS")
@@ -77,7 +79,7 @@ endif()
 set(LIBNIX_SWAPSTACK_O ${TOOLCHAIN_PATH}/m68k-amigaos/libnix/lib/swapstack.o)
 
 # Compiler flags
-set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -mcrt=${MCRT}")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -mcrt=${M68K_CRT}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
 set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -m${M68K_CPU} -I${TOOLCHAIN_PATH}/m68k-amigaos/sys-include")
@@ -85,7 +87,7 @@ set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-mcrt=${MCRT} -Xlinker --allow-multiple-definition ${TOOLCHAIN_LDFLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "-mcrt=${M68K_CRT} -Xlinker --allow-multiple-definition ${TOOLCHAIN_LDFLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ldebug")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
