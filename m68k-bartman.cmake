@@ -19,22 +19,13 @@ set(TOOLCHAIN_PREFIX_DASHED "${TOOLCHAIN_PREFIX}-")
 
 set(AMIGA 1)
 set(AMIGAOS3 1)
-set(M68K_COMPILER "Bebbo")
+set(M68K_COMPILER "Bartman")
+add_compile_definitions(BARTMAN_GCC)
 
 # CPU
 set(M68K_CPU_TYPES "68000" "68010" "68020" "68040" "68060" "68080")
 set(M68K_CPU "68000" CACHE STRING "Target CPU model")
 set_property(CACHE M68K_CPU PROPERTY STRINGS ${M68K_CPU_TYPES})
-
-# FPU
-set(M68K_FPU_TYPES "soft" "hard")
-set(M68K_FPU "soft" CACHE STRING "FPU type")
-set_property(CACHE M68K_FPU PROPERTY STRINGS ${M68K_FPU_TYPES})
-
-# CRT
-set(M68K_CRT_TYPES "nix20" "nix13" "clib2" "ixemul" "newlib")
-set(M68K_CRT "nix20" CACHE STRING "Target std lib")
-set_property(CACHE M68K_CRT PROPERTY STRINGS ${M68K_CRT_TYPES})
 
 # Extra flags
 set(TOOLCHAIN_CFLAGS "${M68K_CFLAGS}" CACHE STRING "CFLAGS")
@@ -61,7 +52,7 @@ set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(CMAKE_C_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}gcc)
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}g++)
 set(CMAKE_CPP_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}cpp)
-set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}gcc -c)
+set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PATH}/bin/${TOOLCHAIN_PREFIX_DASHED}gcc)
 
 if(WIN32)
 	set(CMAKE_C_COMPILER ${CMAKE_C_COMPILER}.exe)
@@ -70,19 +61,15 @@ if(WIN32)
 	set(CMAKE_ASM_COMPILER ${CMAKE_ASM_COMPILER}.exe)
 endif()
 
-# Special purpose libnix object files - variables for easier linking
-set(LIBNIX_SWAPSTACK_O ${TOOLCHAIN_PATH}/m68k-amigaos/libnix/lib/swapstack.o)
-
 # Compiler flags
-set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -mcrt=${M68K_CRT}")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -fomit-frame-pointer -g -MP -MMD -Ofast -nostdlib -Wno-unused-function -Wno-volatile-register-var -fno-tree-loop-distribution -flto -fwhole-program")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
-set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -m${M68K_CPU} -I${TOOLCHAIN_PATH}/m68k-amigaos/sys-include")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} -fno-exceptions ${TOOLCHAIN_CXXFLAGS}")
+set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -Wa,-g -xassembler-with-cpp")
 set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-mcrt=${M68K_CRT} -Xlinker --allow-multiple-definition ${TOOLCHAIN_LDFLAGS}")
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ldebug")
+set(CMAKE_EXE_LINKER_FLAGS "-Wl,--emit-relocs,-Ttext=0")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
