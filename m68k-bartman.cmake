@@ -66,10 +66,10 @@ if(WIN32)
 endif()
 
 # Compiler flags
-set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -fomit-frame-pointer -nostdlib -Wno-unused-function -Wno-volatile-register-var -fno-tree-loop-distribution -flto -fwhole-program -Wno-old-style-declaration")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -MP -MMD -m${M68K_CPU} -fomit-frame-pointer -nostdlib -Wno-unused-function -Wno-volatile-register-var -fno-tree-loop-distribution -flto -fwhole-program")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} -fno-exceptions ${TOOLCHAIN_CXXFLAGS}")
-set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -Wa,-g -xassembler-with-cpp")
+set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -Wa,-g,--register-prefix-optional")
 set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
 
