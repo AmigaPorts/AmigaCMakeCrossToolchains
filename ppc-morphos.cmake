@@ -57,13 +57,13 @@ if(WIN32)
 endif()
 
 # Compiler flags
-set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -fomit-frame-pointer -noixemul")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -fomit-frame-pointer")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
 set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
 
 # Linker configuration
-set(CMAKE_EXE_LINKER_FLAGS "-noixemul -lm -ldebug ${TOOLCHAIN_LDFLAGS} ${TOOLCHAIN_PATH}/${TOOLCHAIN_PREFIX}/lib/libnix/pthread_stubs.o")
+set(CMAKE_EXE_LINKER_FLAGS "-lm -ldebug ${TOOLCHAIN_LDFLAGS}")
 set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
