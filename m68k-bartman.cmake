@@ -35,6 +35,7 @@ set(TOOLCHAIN_COMMON "${M68K_COMMON}" CACHE STRING "Common FLAGS")
 
 set(TOOLCHAIN_PATH_DEFAULT /opt/${TOOLCHAIN_PREFIX})
 set(TOOLCHAIN_PATH ${TOOLCHAIN_PATH_DEFAULT} CACHE PATH "Path to compiler, default: ${TOOLCHAIN_PATH_DEFAULT}")
+# Make sure the toolchain path uses forward slashes, even on Windows, otherwise subcommands may not work correctly if they don't escape the backslashes
 file(TO_CMAKE_PATH "${TOOLCHAIN_PATH}" TOOLCHAIN_PATH)
 
 set(CMAKE_FIND_ROOT_PATH ${TOOLCHAIN_PATH})
