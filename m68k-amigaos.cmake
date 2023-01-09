@@ -88,7 +88,7 @@ endif()
 set(LIBNIX_SWAPSTACK_O ${TOOLCHAIN_PATH}/m68k-amigaos/libnix/lib/swapstack.o)
 
 # Compiler flags
-set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer -mcrt=${M68K_CRT}")
+set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -m${M68K_CPU} -m${M68K_FPU}-float -fomit-frame-pointer ${MCRT_FLAG}")
 set(CMAKE_C_FLAGS_INIT "${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS_INIT "${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
 set(CMAKE_ASM_FLAGS_INIT "-m${M68K_CPU} -I${TOOLCHAIN_PATH}/m68k-amigaos/sys-include")
