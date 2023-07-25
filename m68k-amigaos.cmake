@@ -105,7 +105,7 @@ set(FLAGS_COMMON "${TOOLCHAIN_COMMON} ${M68K_CPU_FLAG} ${M68K_FPU_FLAG} -fomit-f
 set(CMAKE_C_FLAGS_INIT "${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS_INIT "${FLAGS_COMMON} ${TOOLCHAIN_CXXFLAGS}")
 set(CMAKE_ASM_FLAGS_INIT "${M68K_CPU_FLAG} -I${TOOLCHAIN_PATH}/m68k-amigaos/sys-include")
-set(CMAKE_ASM_VASM_FLAGS "-I${TOOLCHAIN_PATH}/m68k-amigaos/ndk-include -I${TOOLCHAIN_PATH}/m68k-amiga-elf/sys-include -no-opt -devpac")
+set(CMAKE_ASM_VASM_FLAGS_INIT "-I${TOOLCHAIN_PATH}/m68k-amigaos/ndk-include -I${TOOLCHAIN_PATH}/m68k-amiga-elf/sys-include -no-opt -devpac")
 set(CMAKE_ASM_VASM_OBJECT_FORMAT "hunk")
 set(BUILD_SHARED_LIBS OFF)
 unset(FLAGS_COMMON)
