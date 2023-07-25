@@ -72,6 +72,7 @@ set(FLAGS_COMMON "${TOOLCHAIN_COMMON} -MP -MMD -m${M68K_CPU} -fomit-frame-pointe
 set(CMAKE_C_FLAGS_INIT "${FLAGS_COMMON} ${TOOLCHAIN_CFLAGS}")
 set(CMAKE_CXX_FLAGS_INIT "${FLAGS_COMMON} -fno-exceptions ${TOOLCHAIN_CXXFLAGS}")
 set(CMAKE_ASM_FLAGS_INIT "-Wa,-g,--register-prefix-optional")
+set(CMAKE_ASM_VASM_FLAGS_INIT "-I${TOOLCHAIN_PATH}/m68k-amiga-elf/sys-include")
 
 # A hack to override GNU defaults
 # Based on https://cristianadam.eu/20190223/modifying-the-default-cmake-build-types/
