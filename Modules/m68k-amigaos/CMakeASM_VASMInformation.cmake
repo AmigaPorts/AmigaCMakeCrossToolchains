@@ -17,4 +17,3 @@ endif()
 set(ASM_DIALECT "_VASM")
 include(CMakeASMInformation)
 set(ASM_DIALECT)
-
